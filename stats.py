@@ -55,6 +55,9 @@ def a_b_test(control, treatment, eps, diff=0):
     diff - the minimum amount that treatment must be greater than control by, 
         default is 0, which tests if treatment is strictly greater than control
     eps - the maximum expected loss that treatment can have compared to control
+    
+    Based on the testing explianed in this white paper:
+    https://vwo.com/downloads/VWO_SmartStats_technical_whitepaper.pdf
     """
     expected_loss = np.maximum(control.samples - treatment.samples, diff).mean()
     expected_loss_less_than_eps = expected_loss < eps
@@ -70,6 +73,9 @@ def multivariate_test(*treatments, control, eps, diff=0):
     diff - the minimum amount that treatment must be greater than control by, 
         default is 0, which tests if treatment is strictly greater than control
     eps - the maximum expected loss that treatment can have compared to control
+    
+    Based on the testing explianed in this white paper:
+    https://vwo.com/downloads/VWO_SmartStats_technical_whitepaper.pdf
     """
     treatments_samples = np.vstack([a.samples for a in treatments])
     expected_losses = np.maximum(control.samples - treatments_samples, diff).mean(axis=1)
